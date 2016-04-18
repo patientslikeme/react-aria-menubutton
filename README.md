@@ -251,6 +251,18 @@ function handleSelection(value, event) {
 }
 ```
 
+**onShowMenu** { Function }: *Required.* A callback to run after the menu is opened.
+
+```js
+<Wrapper onShowMenu={handleShowMenu} />
+
+// ...
+
+function handleShowMenu() {
+  console.log('The menu was shown.');
+}
+```
+
 **closeOnSelection** { Boolean }: By default, it *does* automatically close. If `false`, the menu will *not* automatically close when a selection is made. Default: `true`.
 
 **tag** { String }: The HTML tag for this element. Default: `'div'`.
