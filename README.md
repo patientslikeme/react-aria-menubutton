@@ -251,10 +251,10 @@ function handleSelection(value, event) {
 }
 ```
 
-**onShowMenu** { Function }: *Required.* A callback to run after the menu is opened.
+**onShowMenu** { Function }: A callback to run after the menu is opened.
 
 ```js
-<Wrapper onShowMenu={handleShowMenu} />
+<Wrapper onSelection={handleSelection} onShowMenu={handleShowMenu} />
 
 // ...
 
