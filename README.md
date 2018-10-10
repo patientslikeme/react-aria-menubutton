@@ -2,7 +2,7 @@
 
 A React component (set of components, really) that will help you build accessible menu buttons by providing keyboard interactions and ARIA attributes aligned with [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
 
-Please check out [the demo](http://davidtheclark.github.io/react-aria-menubutton/demo/).
+Please check out [the demo](https://davidtheclark.github.io/react-aria-menubutton/demo/).
 
 ## Project Goals
 
@@ -58,29 +58,19 @@ It does not provide any classes or a stylesheet that you'll have to figure out h
 npm install react-aria-menubutton
 ```
 
-Dependencies:
-- react 0.14.x
-- react-dom 0.14.x
-- [focus-group](//github.com/davidtheclark/focus-group)
-- [teeny-tap](//github.com/davidtheclark/teeny-tap)
-
 The modular approach of this library means you're much better off building it into your code with a module bundling system like browserify or webpack.
 
-But if you need a UMD version (which will include `focus-group` and `teeny-tap` in the bundle, but of course not `React` or `ReactDOM`), you can get it via npmcdm at `https://npmcdn.com/react-aria-menubutton@[version-of-choice]/umd/ReactAriaMenuButton.js`.
-If you don't know about npmcdn, [read about it here](https://npmcdn.com).
+But if you need a UMD version (which will include `focus-group` and `teeny-tap` in the bundle, but of course not `React` or `ReactDOM`), you can get it via npmcdm at `https://unpkg.com/react-aria-menubutton@[version-of-choice]/umd/ReactAriaMenuButton.js`.
+If you don't know about unpkg, [read about it here](https://unpkg.com).
 
-Versions <3.0 are compatible with React 0.13.x.
+## Browser Support
 
-## Tested Browser Support
-
-Basically IE9+. See `.zuul.yml` for more details.
-
-Automated testing is done with [zuul](https://github.com/defunctzombie/zuul) and [Open Suace](https://saucelabs.com/opensauce/).
+Basically IE9+.
 
 ## Usage
 
 ```js
-var AriaMenuButton = require('react-aria-menubutton');
+const AriaMenuButton = require('react-aria-menubutton');
 
 // Now use AriaMenuButton.Wrapper, AriaMenuButton.Button,
 // AriaMenuButton.Menu, and AriaMenuButton.MenuItem ...
@@ -145,7 +135,7 @@ function handleSelection(value, event) { .. }
 // - React's CSSTransitionGroup is used for open-close animation
 
 var React = require('react');
-var CSSTransitionGroup = require('react-addons-css-transition-group');
+var CSSTransitionGroup = require('react-transition-group/CSSTransitionGroup');
 var AriaMenuButton = require('react-aria-menubutton');
 
 var people = [{
@@ -236,9 +226,9 @@ Each wrapper can contain *only one* `Button`, *only one* `Menu`, and *multiple* 
 
 #### props
 
-All props except `onSelection`, are optional.
+All props are optional.
 
-**onSelection** { Function }: *Required.* A callback to run when the user makes a selection (i.e. clicks or presses Enter or Space on a `MenuItem`). It will be passed the `value` of the selected `MenuItem` and the React SyntheticEvent.
+**onSelection** { Function }: A callback to run when the user makes a selection (i.e. clicks or presses Enter or Space on a `MenuItem`). It will be passed the `value` of the selected `MenuItem` and the React SyntheticEvent. *You should definitely use this prop, unless your menu items are anchor elements.*
 
 ```js
 <Wrapper onSelection={handleSelection} />
@@ -248,6 +238,39 @@ All props except `onSelection`, are optional.
 function handleSelection(value, event) {
   event.stopPropagation;
   console.log(value);
+}
+```
+
+**onMenuToggle** { Function }: A callback to run when the menu is opened or closed. It will be passed the the following menu-state object:
+
+```js
+{
+  isOpen: Boolean // whether or not the menu is open
+}
+```
+
+For example:
+
+```js
+const Example extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isOpen: false,
+    };
+  }
+
+  render() {
+    const openClass = this.state.isOpen ? 'open' : '';
+
+    return (
+      <Wrapper
+        className={`${openClass}`}
+        onMenuToggle={({ isOpen }) => { this.setState({ isOpen })}}
+      />
+    );
+  }
 }
 ```
 
@@ -269,7 +292,7 @@ All props are optional.
 
 **disabled** { Boolean }: If `true`, the element is disabled (`aria-disabled='true'`, not in tab order, clicking has no effect).
 
-**tag** { String }: The HTML tag for this element. Default: `'span'`.
+**tag** { String }: The HTML tag for this element. Default: `'span'` so styling across browsers is consistent, `button` is a good alternative if styling for that element is no issue.
 
 *Any additional props (e.g. `id`, `className`, `data-whatever`) are passed directly to the HTML element.*
 
@@ -336,7 +359,7 @@ Open a modal programmatically.
 
 These are the `openOptions`:
 
-- **focusMenu** { Boolean }: If `true`, the menu's first item will receive focus when the menu opens. Default: `false`.
+- **focusMenu** { Boolean }: If `true`, the menu's first item will receive focus when the menu opens. Default: `true`.
 
 ### closeMenu(wrapperId[, closeOptions])
 

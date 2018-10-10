@@ -1,32 +1,83 @@
 # Changelog
 
-# 4.1.2
+## 6.0.1
+
+- Chore: Use loose mode for Babel compilation.
+
+## 6.0.0
+
+- **Breaking:** Pass `disabled` attribute to `Button` component's inner element if it is a regular HTML element that supports `disabled`.
+  Considered a potentially breaking (though positive) change because it may affect behavior and styling of your UI.
+
+## 5.1.1
+
+- Fix keydown behavior of link menu items, so Enter and Space open the link the same way a click does.
+- Make prop `onSelection` optional, because it's not necessary if your menu items are link.
+
+## 5.1.0
+
+- React 16 support.
+
+## 5.0.2
+
+- Satisfy React deprecation warnings.
+
+## 5.0.1
+
+- Clicks inside the menu that are not on a `MenuItem` move focus to the first `MenuItem`.
+- When the menu opens, focus only moves to the first menu item *if you opened with keyboard interactions*.
+  With a mouse click on the trigger, for example, focus remains on the trigger.
+
+## 5.0.0
+
+- When the menu opens, move focus to the first item (by default).
+  This represents a change to [the WAI-ARIA Menu Button Design Pattern](http://www.w3.org/TR/wai-aria-practices/#menubutton).
+
+## 4.3.1
+
+- Introduce `dist/`, where `src/` now compiles to, since React 15.5+ demands `class`es, so Babel-compilation.
+  Which is actually a huge overhaul, though in semver it's just a patch.
+
+## 4.3.0
+
+- Add `onMenuToggle` prop to `Wrapper`.
+
+## 4.2.0
+
+- Use `ownerDocument` instead of `document.documentElement` in case this is used in an iframe.
+- Rewrite test suite using Jest.
+
+## 4.1.3
+
+- Fix UMD build.
+
+## 4.1.2
 
 - Allow React 15 as a `peerDependency`.
 
-# 4.1.1
+## 4.1.1
 
 - Update UMD build.
 
-# 4.1.0
+## 4.1.0
 
 - Add `openMenu()` and `closeMenu()` to API.
 - Improve (fix) UMD build.
 - Allow arbitrary props to pass through to Button, Menu, MenuItem, and Wrapper elements.
 
-# 4.0.2
+## 4.0.2
 
 - Move `react` and `react-dom` to peer dependencies.
 
-# 4.0.1
+## 4.0.1
 
 - Update `focus-group` due to important fix there.
 
-# 4.0.0
+## 4.0.0
 
 - Use `focus-group` for focus management, which includes improving letter navigation.
 - Switch from `tap.js` to `teeny-tap`.
-- Move UMD build to `umd/` directory that is only distributed with the npm package (available on npmcdn).
+- Move UMD build to `umd/` directory that is only distributed with the npm package (available on unpkg).
 
 ## 3.1.0
 

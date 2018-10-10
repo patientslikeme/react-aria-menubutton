@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import CSSTransitionGroup from 'react-addons-css-transition-group'
 import {
   Wrapper,
   Button,
   Menu,
   MenuItem,
   openMenu,
-  closeMenu,
-} from '../..';
+  closeMenu
+} from '../../src';
 
 const fancyStuff = ['bowling', 'science', 'scooting'];
 
@@ -27,74 +26,61 @@ class Fancy extends React.Component {
       <MenuItem
         value={{
           activity,
-          somethingArbitrary: 'arbitrary',
+          somethingArbitrary: 'arbitrary'
         }}
         text={activity}
         key={i}
-        className='FancyMB-menuItem'
+        className="FancyMB-menuItem"
       >
-        <img src={`svg/${activity}.svg`} className='FancyMB-svg' />
-        <span className='FancyMB-text'>
+        <img src={`svg/${activity}.svg`} className="FancyMB-svg" />
+        <span className="FancyMB-text">
           I enjoy
-          <span className='FancyMB-keyword'>
-            {activity}
-          </span>
+          <span className="FancyMB-keyword">{activity}</span>
         </span>
       </MenuItem>
     ));
 
     const menuInnards = menuState => {
-      const menu = (!menuState.isOpen) ? false : (
-        <div className='FancyMB-menu' key='menu'>
+      if (!menuState.isOpen) return null;
+      return (
+        <div className="FancyMB-menu" key="menu">
           {fancyMenuItems}
         </div>
-      );
-      return (
-        <CSSTransitionGroup
-          transitionName='is'
-          transitionEnterTimeout={200}
-          transitionLeaveTimeout={200}
-        >
-          {menu}
-        </CSSTransitionGroup>
       );
     };
 
     return (
       <div>
         <div style={{ marginBottom: 20 }}>
-          <button onClick={() => openMenu('foo')}>
-            open menu below
+          <button onClick={() => openMenu('foo')}>open menu below</button>
+          <button onClick={() => openMenu('foo', { focusMenu: false })}>
+            open menu below without focus
           </button>
-          <button onClick={() => openMenu('foo', { focusMenu: true })}>
-            open menu below with focus
-          </button>
-          <button onClick={() => closeMenu('foo')}>
-            close menu below
-          </button>
+          <button onClick={() => closeMenu('foo')}>close menu below</button>
         </div>
         <div>
           <Wrapper
             onSelection={this.handleSelection.bind(this)}
-            className='FancyMB'
-            id='foo'
+            className="FancyMB"
+            id="foo"
           >
-            <Button className='FancyMB-trigger'>
-              <span className='FancyMB-triggerInnards'>
-                <img src='svg/profile-female.svg' className='FancyMB-triggerIcon '/>
-                <span className='FancyMB-triggerText'>
+            <Button className="FancyMB-trigger">
+              <span className="FancyMB-triggerInnards">
+                <img
+                  src="svg/profile-female.svg"
+                  className="FancyMB-triggerIcon "
+                />
+                <span className="FancyMB-triggerText">
                   What do you enjoy?<br />
-                  <span className='FancyMB-triggerSmallText'>
+                  <span className="FancyMB-triggerSmallText">
                     (select an enjoyable activity)
                   </span>
                 </span>
               </span>
             </Button>
-            <Menu>
-              {menuInnards}
-            </Menu>
+            <Menu>{menuInnards}</Menu>
           </Wrapper>
-          <span className='FancyMB-selectedText' style={{ marginLeft: '1em' }}>
+          <span className="FancyMB-selectedText" style={{ marginLeft: '1em' }}>
             You said you enjoy: <strong>{this.state.selected}</strong>
           </span>
         </div>
@@ -103,10 +89,7 @@ class Fancy extends React.Component {
   }
 }
 
-ReactDOM.render(
-  <Fancy />,
-  document.getElementById('demo-fancy')
-);
+ReactDOM.render(<Fancy />, document.getElementById('demo-fancy'));
 
 // Pre-load the initially hidden SVGs
 fancyStuff.forEach(t => {

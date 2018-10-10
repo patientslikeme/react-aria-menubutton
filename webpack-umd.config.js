@@ -1,42 +1,43 @@
-var webpack = require('webpack');
-var path = require('path');
+const path = require("path");
+
+const filename = process.env.MINIFY
+  ? "ReactAriaMenuButton.min.js"
+  : "ReactAriaMenuButton.js";
 
 module.exports = {
   entry: {
-    AriaMenuButton: './index.js',
+    AriaMenuButton: "./src/index.js"
   },
   output: {
-    library: 'ReactAriaMenuButton',
-    libraryTarget: 'umd',
-    path: path.join(__dirname, 'umd'),
-    filename: 'ReactAriaMenuButton.min.js',
+    library: "ReactAriaMenuButton",
+    libraryTarget: "umd",
+    path: path.join(__dirname, "umd"),
+    filename: filename
   },
   externals: [
     {
       react: {
-        root: 'React',
-        commonjs2: 'react',
-        commonjs: 'react',
-        amd: 'react',
-      },
+        root: "React",
+        commonjs2: "react",
+        commonjs: "react",
+        amd: "react"
+      }
     },
     {
-      'react-dom': {
-        root: 'ReactDOM',
-        commonjs2: 'react-dom',
-        commonjs: 'react-dom',
-        amd: 'react-dom',
-      },
-    },
+      "react-dom": {
+        root: "ReactDOM",
+        commonjs2: "react-dom",
+        commonjs: "react-dom",
+        amd: "react-dom"
+      }
+    }
   ],
+  module: {
+    rules: [{ test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }]
+  },
   node: {
     Buffer: false,
-    global: false,
     process: false,
-    setImmediate: false,
-  },
-  plugins: [
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
-  ],
+    setImmediate: false
+  }
 };
